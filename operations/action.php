@@ -8,6 +8,8 @@
 		unset($_GET['action']);		
 		header("Location: ../program2.php");
 	}
+	
+	//to add the book details in DB
 	if($action == "add") {
 		$name = $_POST['bnm'];
 		$author = $_POST['bauth'];
@@ -17,7 +19,7 @@
 
 		if ($conn->query($qry) === TRUE) {
 			echo "New record added successfully";
-			$_SESSION['msg'] = "success";
+			$_SESSION['msg'] = "success"; //created session to display success message at front end
 		} else {
 			echo "Error: " . $qry . "<br>" . $conn->error;
 		}
@@ -26,6 +28,7 @@
 		header("Location: ../program2.php");
 	}
 	
+	//to update the status of book in DB
 	if($action == "update") {
 		$bid = $_GET['bid'];
 		$status = $_GET['bstat'];
@@ -51,6 +54,7 @@
 		header("Location: ../program2.php");
 	}
 	
+	//to delete book details from DB
 	if($action == "delete") {
 		$bid = $_GET['bid'];
 		$qry = "DELETE FROM `book_details` WHERE `bkid`='$bid'";
