@@ -25,23 +25,18 @@ body{
 	-webkit-transform: translate(0,-50%);
 }
 /* common classes end */
+h4 {
+    margin-bottom: 0;
+    margin-top: 15px;
+}
 .container{
-	/* width: 1170px;
-	max-width: 100%;
-	padding: 0 15px;
-	margin: 0 auto;
-	box-shadow:  1px 3x 3px rgba(0,0,0,.4);
-	-webkit-box-shadow:  1px 5px 5px rgba(0,0,0,.4);
-	height: 100%; */
 	max-width: 100%;
 }
-.content {
-	padding: 3%;
+.tableCont {
+    max-width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
 }
-h2{
-	margin-top: 3%;
-}
-
 table{
 	width: 100%;
 	border-collapse: collapse;
@@ -54,9 +49,11 @@ table tr th{
 	padding: 5px;
 	text-align: center;
 }
-table tr td{
+table.table tr td{
 	border: 1px solid #ccc;
-	padding: 0 5px;
+    padding: 0 5px;
+    height: 25px;
+    vertical-align: middle;
 }
 table tr td:first-child{text-align: center;}
 .btn {
@@ -84,9 +81,25 @@ table tr td:first-child{text-align: center;}
 .search input {
 	float: left;
 	width: 200px;
+	border-radius: 4px 0 0 4px;
 }
 .search .btn {
 	float: left;
+	border-radius: 0 4px 4px 0;
+}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+	.btnGroup {
+		margin-right: 10px;
+		}
+	.search {
+		float: left;
+	}
+	.search input {
+		width: 180px;
+	}
+	.search .btn {
+		width: 80px;
+	}
 }
 .alert{
   clear: both;

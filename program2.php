@@ -11,15 +11,13 @@
 <body>
 	<div class="container">
 		<div class="content">
-			<header><h1>Book shop management</h1></header>
+			<header><h2>Book shop management</h2></header>
 			<section>
 				<div class="btnGroup">
 					<button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#add">Add book</button>
 					<form action="operations/action.php?action=showAll" method="post" class="pull-left">
 						<button type="submit" class="btn btn-primary" >View all</button>
-					</form>
-					<!-- <button type="button" class="btn btn-primary">Update</button>
-					<button type="button" class="btn btn-primary">Delete</button> -->
+					</form>					
 				</div>
 				<?php session_start(); ?>
 				<div class="search">
@@ -57,16 +55,18 @@
 					}
 				?>
 				<div class="clear"></div>
-				<h2>Books list</h2>
+				<h4>Books list</h4>
 				<?php include('operations/connection.php'); ?>
-				<table>
+				<div class="tableCont">
+				<table class="table table-responsive">
 					<tr><th>Sr. No.</th><th>Name</th><th>Author</th><th>Status</th><th>Issue</th><th>Return</th><th>Delete</th></tr>
 					<?php
+					//code to search book name
 					if(isset($_GET['action'])) {
 						$action = $_GET['action'];
 						if($action == "search") {
 							$bnm = $_POST['booknm'];
-							$qry = "select * FROM `book_details` WHERE `bknm` LIKE '%".$bnm."%'";
+							$qry = "select * FROM `book_details` WHERE `bknm` LIKE '%".$bnm."%'"; //query for search 
 							$result = $conn->query($qry);
 						
 						//if(isset($_GET['bid'])) {
@@ -78,22 +78,19 @@
 							$op ="";
 							while($row = $result->fetch_assoc()) {
 								$bid = $row["bkid"];
-							//if(isset($_GET['bid'])) {
-							//	if($rowToHighlight == $bid){ $class="updatedRow"; }
-							//	else {$class="";}
-							//}
-							//else {$class="";}
+							
 								$op .= "<tr><td>" . $cnt . "</td><td>" . $row["bknm"]. "</td><td>" . $row["bkauthor"]."</td><td class='text-center'>";
 								
 								$stat = $row["bkstatus"]; 
 								
+								//to display availability checking status field  
 								if($stat == 1) { $statTxt = "Available"; $disableReturn = "disabled"; $disableIssue = ""; } 
 								else { $statTxt = "NA"; $disableIssue = "disabled";$disableReturn = ""; }
 								
 								$op .=  $statTxt."</td><td><a href='operations/action.php?action=update&bid=".$bid."&bstat=".$stat."' ><button type='submit'".$disableIssue."><i class='glyphicon glyphicon-pencil'></i></button></a></td><td><a href='operations/action.php?action=update&bid=".$bid."&bstat=".$stat."' ><button type='submit' ".$disableReturn."><i class='glyphicon glyphicon-retweet'></i></button></a></td><td><a href='operations/action.php?action=delete&bid=".$bid."'><button type='submit'><i class='glyphicon glyphicon-trash'></i></button></a></td></tr>";
 								$cnt++;
 							}
-							echo $op;
+							echo $op; //displays searched book list in table format
 						} else {
 							echo "0 results";
 						}
@@ -102,7 +99,7 @@
 					}
 					?>
 					<?php
-						
+						//code to fetch all book list
 						if(!(isset($_GET['action']))) {
 						$qry = "SELECT * FROM `book_details`";
 						$result = $conn->query($qry);
@@ -116,7 +113,7 @@
 							while($row = $result->fetch_assoc()) {
 								$bid = $row["bkid"];
 							
-							if(isset($_SESSION['bid'])) {
+							if(isset($_SESSION['bid'])) {	//to display the updated row applying class 
 								if($rowToHighlight == $bid){ $class="updatedRow"; session_unset($_SESSION['bid']);}
 								else {$class="";}
 							}
@@ -131,7 +128,7 @@
 								$op .=  $statTxt."</td><td><a href='operations/action.php?action=update&bid=".$bid."&bstat=".$stat."' ><button type='submit'".$disableIssue."><i class='glyphicon glyphicon-pencil'></i></button></a></td><td><a href='operations/action.php?action=update&bid=".$bid."&bstat=".$stat."' ><button type='submit' ".$disableReturn."><i class='glyphicon glyphicon-retweet'></i></button></a></td><td><a href='operations/action.php?action=delete&bid=".$bid."'><button type='submit'><i class='glyphicon glyphicon-trash'></i></button></a></td></tr>";
 								$cnt++;
 							}
-							echo $op;
+							echo $op; //displays book list in table format
 						} else {
 							echo "0 results";
 						}
@@ -139,6 +136,7 @@
 					}
 					?>
 				<table>
+				</div>
 			</section>
 		</div>
 	</div>
@@ -187,7 +185,7 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			setTimeout(function(){ $(".alert").slideUp(); }, 4000);			
+			setTimeout(function(){ $(".alert").slideUp(); }, 4000);	//to hide the alert message after 4 sec
 		});
 	</script>
 	
